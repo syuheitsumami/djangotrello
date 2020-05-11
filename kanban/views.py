@@ -1,14 +1,14 @@
-from django.contrib.auth import login # 追加
-from django.contrib.auth.forms import UserCreationForm # 追加
+from django.contrib.auth import login 
+from django.contrib.auth.forms import UserCreationForm 
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User # 追加
-from django.urls import reverse_lazy # 追加
+from django.contrib.auth.models import User 
+from django.urls import reverse_lazy 
 from django.views.generic import DetailView, UpdateView, CreateView, ListView, DeleteView
-from django.shortcuts import render, redirect, resolve_url, get_object_or_404 # resolve_urlを追加
+from django.shortcuts import render, redirect, resolve_url, get_object_or_404 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .mixins import OnlyYouMixin
-from .forms import UserForm, ListForm, CardForm, CardCreateFromHomeForm # 追加
-from . models import List, Card # 追加
+from .forms import UserForm, ListForm, CardForm, CardCreateFromHomeForm 
+from . models import List, Card 
 
 
 def index(request):
@@ -26,7 +26,7 @@ class UserUpdateView(OnlyYouMixin, UpdateView):
     def get_success_url(self):
         return resolve_url('kanban:users_detail', pk=self.kwargs['pk'])
 
-class UserDetailView(LoginRequiredMixin, DetailView): # 編集
+class UserDetailView(LoginRequiredMixin, DetailView): 
     model = User
     template_name = "kanban/users/detail.html"
 
@@ -111,7 +111,7 @@ class CardCreateFromHomeView(LoginRequiredMixin, CreateView):
         form.instance.user = self.request.user
         return super().form_valid(form)
 
-# ここから追加
+
 def signup(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
@@ -126,4 +126,3 @@ def signup(request):
         "form": form
     }
     return render(request, 'kanban/signup.html', context)
-# ここまで追加
