@@ -1,0 +1,34 @@
+{% extends "kanban/base.html" %}
+
+{% block content %}
+<!-- ここから削除 -->
+<style>
+body { padding-top: 70px; }
+</style>
+<!-- ここまで削除 -->
+
+<div class="container-fluid home"> <!-- homeを追加 -->
+  <div class="row flex-nowrap">
+    {% for list in list_list %}
+    <div class="bg-light m-3 p-2 list"> <!-- listを追加 -->
+      <h4>{{ list.title }}
+        <a href="{% url 'kanban:lists_update' list.pk %}" class="text-dark"><i class="far fa-edit fa-xs"></i></a>
+        <a href="{% url 'kanban:lists_delete' list.pk %}" class="text-dark"><i class="far fa-trash-alt fa-xs"></i></a>
+      </h4>
+
+      {% for card in list.card_set.all %}
+      <a href="{% url 'kanban:cards_detail' card.pk %}" class="card m-3">
+        <div class="card-body">
+          <h5 class="card-title">{{ card.title }}</h5>
+          <footer>
+            <small class="text-muted">作成者: {{ card.user.username }}</small>
+          </footer>
+        </div>
+      </a>
+      {% endfor %}
+      <a href="{% url 'kanban:cards_create' %}" class="text-dark"><i class="far fa-plus-square"></i> さらにカードを追加</a>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
