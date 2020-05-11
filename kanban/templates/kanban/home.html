@@ -1,16 +1,16 @@
 {% extends "kanban/base.html" %}
 
 {% block content %}
-<!-- ここから削除 -->
+
 <style>
 body { padding-top: 70px; }
 </style>
-<!-- ここまで削除 -->
 
-<div class="container-fluid home"> <!-- homeを追加 -->
+
+<div class="container-fluid home"> 
   <div class="row flex-nowrap">
     {% for list in list_list %}
-    <div class="bg-light m-3 p-2 list"> <!-- listを追加 -->
+    <div class="bg-light m-3 p-2 list"> 
       <h4>{{ list.title }}
         <a href="{% url 'kanban:lists_update' list.pk %}" class="text-dark"><i class="far fa-edit fa-xs"></i></a>
         <a href="{% url 'kanban:lists_delete' list.pk %}" class="text-dark"><i class="far fa-trash-alt fa-xs"></i></a>
